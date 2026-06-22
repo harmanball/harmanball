@@ -17,6 +17,7 @@
     --gold-deep:#c4912a;
     --ink:#06200f;
     --red:#c1462f;
+    --usta:#7a3ec1;
   }
 
   *{box-sizing:border-box;}
@@ -242,6 +243,11 @@
     box-shadow:0 4px 0 rgba(193,70,47,0.3), 0 6px 14px rgba(0,0,0,.3);
   }
   .level-hard .level-name{color:var(--red);}
+  .level-usta{
+    border:2px solid rgba(122,62,193,0.65);
+    box-shadow:0 4px 0 rgba(122,62,193,0.3), 0 6px 14px rgba(0,0,0,.3);
+  }
+  .level-usta .level-name{color:var(--usta);}
   .level-card .level-name{
     font-size:28px;
     font-weight:700;
@@ -553,6 +559,7 @@
   }
   #levelTag.tag-hard{color:var(--red);}
   #levelTag.tag-normal{color:var(--gold);}
+  #levelTag.tag-usta{color:var(--usta);}
 
   /* Geri sayım dairesi */
   .countdown-wrap{
@@ -774,12 +781,17 @@
 
       <button class="level-card level-normal" onclick="startGame(currentMode, 'normal')">
         <span class="level-name">NORMAL</span>
-        <span class="level-desc" id="levelDescNormal">45 kulüp &middot; 45 ülke</span>
+        <span class="level-desc" id="levelDescNormal">30 kulüp &middot; 30 ülke</span>
       </button>
 
       <button class="level-card level-hard" onclick="startGame(currentMode, 'hard')">
         <span class="level-name">ZOR</span>
-        <span class="level-desc" id="levelDescHard">90 kulüp &middot; 90 ülke</span>
+        <span class="level-desc" id="levelDescHard">45 kulüp &middot; 45 ülke</span>
+      </button>
+
+      <button class="level-card level-usta" onclick="startGame(currentMode, 'usta')">
+        <span class="level-name">USTA</span>
+        <span class="level-desc" id="levelDescUsta">90 kulüp &middot; 90 ülke</span>
       </button>
     </div>
   </section>
@@ -888,7 +900,7 @@
 </div>
 
 <script>
-const TEAMS_HARD = ["Bayer Leverkusen","Bayern Münih","Borussia Dortmund","Borussia Mönchengladbach","Eintracht Frankfurt","Hoffenheim","RB Leipzig","Schalke 04","Stuttgart","Wolfsburg","Athletic Club","Atlético Madrid","Barcelona","Betis","Celta Vigo","Real Madrid","Real Sociedad","Sevilla","Valencia","Villarreal","Lille","Lyon","Marseille","Monaco","Nice","Paris Saint-Germain","Rennes","Arsenal","Aston Villa","Blackburn Rovers","Bolton Wanderers","Bournemouth","Brighton & Hove Albion","Chelsea","Crystal Palace","Everton","Fulham","Hull City","Leeds United","Leicester City","Liverpool","Manchester City","Manchester United","Newcastle United","Nottingham Forest","Sunderland","Tottenham Hotspur","West Ham United","Wolverhampton Wanderers","Atalanta","Bologna","Brescia","Como","Fiorentina","Genoa","Inter","Juventus","Lazio","Milan","Napoli","Palermo","Parma","Roma","Sassuolo","Torino","Udinese","Adana Demirspor","Alanyaspor","Ankaragücü","Antalyaspor","Başakşehir","Beşiktaş","Bursaspor","Çaykur Rizespor","Eyüpspor","Fatih Karagümrük","Fenerbahçe","Galatasaray","Gaziantepspor","Gençlerbirliği","Hatayspor","İstanbulspor","Kasımpaşa","Kayserispor","Kocaelispor","Konyaspor","Samsunspor","Sivasspor","Trabzonspor","Köln"];
+const TEAMS_USTA = ["Bayer Leverkusen","Bayern Münih","Borussia Dortmund","Borussia Mönchengladbach","Eintracht Frankfurt","Hoffenheim","RB Leipzig","Schalke 04","Stuttgart","Wolfsburg","Athletic Club","Atlético Madrid","Barcelona","Betis","Celta Vigo","Real Madrid","Real Sociedad","Sevilla","Valencia","Villarreal","Lille","Lyon","Marseille","Monaco","Nice","Paris Saint-Germain","Rennes","Arsenal","Aston Villa","Blackburn Rovers","Bolton Wanderers","Bournemouth","Brighton & Hove Albion","Chelsea","Crystal Palace","Everton","Fulham","Hull City","Leeds United","Leicester City","Liverpool","Manchester City","Manchester United","Newcastle United","Nottingham Forest","Sunderland","Tottenham Hotspur","West Ham United","Wolverhampton Wanderers","Atalanta","Bologna","Brescia","Como","Fiorentina","Genoa","Inter","Juventus","Lazio","Milan","Napoli","Palermo","Parma","Roma","Sassuolo","Torino","Udinese","Adana Demirspor","Alanyaspor","Ankaragücü","Antalyaspor","Başakşehir","Beşiktaş","Bursaspor","Çaykur Rizespor","Eyüpspor","Fatih Karagümrük","Fenerbahçe","Galatasaray","Gaziantepspor","Gençlerbirliği","Hatayspor","İstanbulspor","Kasımpaşa","Kayserispor","Kocaelispor","Konyaspor","Samsunspor","Sivasspor","Trabzonspor","Köln"];
 
 const COUNTRY_FLAGS = {"ABD":"us", "Almanya":"de", "Angola":"ao", "Arjantin":"ar", "Arnavutluk":"al", "Avustralya":"au", "Avusturya":"at", "BAE":"ae", "Belçika":"be", "Bolivya":"bo", "Bosna":"ba", "Brezilya":"br", "Bulgaristan":"bg", "Burkina Faso":"bf", "Cezayir":"dz", "Curaçao":"cw", "Danimarka":"dk", "Ekvador":"ec", "Fas":"ma", "Fildişi Sahili":"ci", "Finlandiya":"fi", "Fransa":"fr", "Gabon":"ga", "Galler":"gb-wls", "Gana":"gh", "Gine":"gn", "Güney Afrika":"za", "Güney Kore":"kr", "Gürcistan":"ge", "Haiti":"ht", "Hollanda":"nl", "Honduras":"hn", "Hırvatistan":"hr", "Irak":"iq", "Jamaika":"jm", "Japonya":"jp", "Kamerun":"cm", "Kanada":"ca", "Karadağ":"me", "Katar":"qa", "Kolombiya":"co", "Kongo DC":"cd", "Kosova":"xk", "Kosta Rika":"cr", "Kuzey Makedonya":"mk", "Kuzey İrlanda":"gb-nir", "Macaristan":"hu", "Mali":"ml", "Meksika":"mx", "Mısır":"eg", "Nijerya":"ng", "Norveç":"no", "Panama":"pa", "Paraguay":"py", "Peru":"pe", "Polonya":"pl", "Portekiz":"pt", "Romanya":"ro", "Rusya":"ru", "Senegal":"sn", "Slovakya":"sk", "Slovenya":"si", "Suriye":"sy", "Suudi Arabistan":"sa", "Sırbistan":"rs", "Tunus":"tn", "Türkiye":"tr", "Uganda":"ug", "Ukrayna":"ua", "Umman":"om", "Uruguay":"uy", "Venezuela":"ve", "Yeni Zelanda":"nz", "Yeşil Burun":"cv", "Yunanistan":"gr", "Zambiya":"zm", "Çekya":"cz", "Özbekistan":"uz", "Ürdün":"jo", "İngiltere":"gb-eng", "İran":"ir", "İrlanda":"ie", "İskoçya":"gb-sct", "İspanya":"es", "İsrail":"il", "İsveç":"se", "İsviçre":"ch", "İtalya":"it", "İzlanda":"is", "Şili":"cl"};
 
@@ -897,11 +909,15 @@ function flagUrl(countryName){
   return code ? `https://raw.githubusercontent.com/hampusborgos/country-flags/main/svg/${code}.svg` : null;
 }
 
-const COUNTRIES_HARD = ["Arjantin","İspanya","Fransa","İngiltere","Portekiz","Brezilya","Fas","Hollanda","Belçika","Almanya","Hırvatistan","İtalya","Kolombiya","Meksika","Senegal","Uruguay","ABD","Japonya","İsviçre","İran","Danimarka","Türkiye","Ekvador","Avusturya","Güney Kore","Nijerya","Avustralya","Cezayir","Mısır","Kanada","Norveç","Ukrayna","Fildişi Sahili","Panama","Rusya","Polonya","Galler","İsveç","Macaristan","Çekya","Paraguay","İskoçya","Sırbistan","Kamerun","Tunus","Kongo DC","Slovakya","Yunanistan","Venezuela","Özbekistan","Şili","Peru","Kosta Rika","Romanya","Mali","Katar","Irak","İrlanda","Slovenya","Güney Afrika","Suudi Arabistan","Burkina Faso","Ürdün","Bosna","Honduras","Arnavutluk","Yeşil Burun","BAE","Kuzey Makedonya","Kuzey İrlanda","Jamaika","Gürcistan","Gana","İzlanda","Finlandiya","İsrail","Bolivya","Kosova","Umman","Karadağ","Gine","Curaçao","Haiti","Suriye","Yeni Zelanda","Gabon","Bulgaristan","Angola","Uganda","Zambiya"];
+const COUNTRIES_USTA = ["Arjantin","İspanya","Fransa","İngiltere","Portekiz","Brezilya","Fas","Hollanda","Belçika","Almanya","Hırvatistan","İtalya","Kolombiya","Meksika","Senegal","Uruguay","ABD","Japonya","İsviçre","İran","Danimarka","Türkiye","Ekvador","Avusturya","Güney Kore","Nijerya","Avustralya","Cezayir","Mısır","Kanada","Norveç","Ukrayna","Fildişi Sahili","Panama","Rusya","Polonya","Galler","İsveç","Macaristan","Çekya","Paraguay","İskoçya","Sırbistan","Kamerun","Tunus","Kongo DC","Slovakya","Yunanistan","Venezuela","Özbekistan","Şili","Peru","Kosta Rika","Romanya","Mali","Katar","Irak","İrlanda","Slovenya","Güney Afrika","Suudi Arabistan","Burkina Faso","Ürdün","Bosna","Honduras","Arnavutluk","Yeşil Burun","BAE","Kuzey Makedonya","Kuzey İrlanda","Jamaika","Gürcistan","Gana","İzlanda","Finlandiya","İsrail","Bolivya","Kosova","Umman","Karadağ","Gine","Curaçao","Haiti","Suriye","Yeni Zelanda","Gabon","Bulgaristan","Angola","Uganda","Zambiya"];
 
-const TEAMS_NORMAL = ["Adana Demirspor","Arsenal","Aston Villa","Atalanta","Atlético Madrid","Barcelona","Başakşehir","Bayer Leverkusen","Bayern Münih","Beşiktaş","Bologna","Borussia Dortmund","Chelsea","Como","Crystal Palace","Everton","Fenerbahçe","Fiorentina","Galatasaray","Inter","Juventus","Kasımpaşa","Lazio","Lille","Liverpool","Lyon","Manchester City","Manchester United","Marseille","Milan","Monaco","Napoli","Newcastle United","Paris Saint-Germain","Parma","RB Leipzig","Real Madrid","Real Sociedad","Roma","Schalke 04","Sevilla","Tottenham Hotspur","Trabzonspor","Valencia","West Ham United"];
+const TEAMS_ZOR = ["Adana Demirspor","Arsenal","Aston Villa","Atalanta","Atlético Madrid","Barcelona","Başakşehir","Bayer Leverkusen","Bayern Münih","Beşiktaş","Bologna","Borussia Dortmund","Chelsea","Como","Crystal Palace","Everton","Fenerbahçe","Fiorentina","Galatasaray","Inter","Juventus","Kasımpaşa","Lazio","Lille","Liverpool","Lyon","Manchester City","Manchester United","Marseille","Milan","Monaco","Napoli","Newcastle United","Paris Saint-Germain","Parma","RB Leipzig","Real Madrid","Real Sociedad","Roma","Schalke 04","Sevilla","Tottenham Hotspur","Trabzonspor","Valencia","West Ham United"];
 
-const COUNTRIES_NORMAL = ["ABD","Almanya","Arjantin","Avustralya","Avusturya","Belçika","Brezilya","Cezayir","Çekya","Danimarka","Ekvador","Fas","Fildişi Sahili","Fransa","Galler","Güney Kore","Hırvatistan","Hollanda","İngiltere","İskoçya","İspanya","İsveç","İsviçre","İtalya","Japonya","Kamerun","Kanada","Kolombiya","Kongo DC","Macaristan","Meksika","Mısır","Nijerya","Norveç","Polonya","Portekiz","Rusya","Senegal","Sırbistan","Slovakya","Tunus","Türkiye","Ukrayna","Uruguay","Yunanistan"];
+const TEAMS_NORMAL = ["Arsenal","Aston Villa","Atlético Madrid","Barcelona","Bayern Münih","Beşiktaş","Borussia Dortmund","Chelsea","Fenerbahçe","Galatasaray","Inter","Juventus","Lazio","Lille","Liverpool","Lyon","Manchester City","Manchester United","Marseille","Milan","Monaco","Napoli","Newcastle United","Paris Saint-Germain","RB Leipzig","Real Madrid","Roma","Sevilla","Tottenham Hotspur","Trabzonspor"];
+
+const COUNTRIES_ZOR = ["ABD","Almanya","Arjantin","Avustralya","Avusturya","Belçika","Brezilya","Cezayir","Çekya","Danimarka","Ekvador","Fas","Fildişi Sahili","Fransa","Galler","Güney Kore","Hırvatistan","Hollanda","İngiltere","İskoçya","İspanya","İsveç","İsviçre","İtalya","Japonya","Kamerun","Kanada","Kolombiya","Kongo DC","Macaristan","Meksika","Mısır","Nijerya","Norveç","Polonya","Portekiz","Rusya","Senegal","Sırbistan","Slovakya","Tunus","Türkiye","Ukrayna","Uruguay","Yunanistan"];
+
+const COUNTRIES_NORMAL = ["Almanya","Arjantin","Belçika","Brezilya","Çekya","Danimarka","Fas","Fildişi Sahili","Fransa","Hırvatistan","Hollanda","İngiltere","İspanya","İsveç","İsviçre","İtalya","Kamerun","Kolombiya","Mısır","Nijerya","Norveç","Portekiz","Senegal","Ukrayna","Uruguay","ABD","Meksika","Türkiye","Sırbistan","Polonya"];
 
 let currentMode = null;
 let currentLevel = null;
@@ -936,10 +952,14 @@ function pickTwoUnique(arr, usedSet){
 }
 
 function getTeamsList(){
-  return currentLevel === 'hard' ? TEAMS_HARD : TEAMS_NORMAL;
+  if(currentLevel === 'usta') return TEAMS_USTA;
+  if(currentLevel === 'hard') return TEAMS_ZOR;
+  return TEAMS_NORMAL;
 }
 function getCountriesList(){
-  return currentLevel === 'hard' ? COUNTRIES_HARD : COUNTRIES_NORMAL;
+  if(currentLevel === 'usta') return COUNTRIES_USTA;
+  if(currentLevel === 'hard') return COUNTRIES_ZOR;
+  return COUNTRIES_NORMAL;
 }
 
 function getPair(){
@@ -958,11 +978,13 @@ function showLevelSelect(mode){
   currentMode = mode;
   document.getElementById('levelGameLabel').textContent = mode === 'team-team' ? 'KULÜP vs KULÜP' : 'ÜLKE vs KULÜP';
   if(mode === 'team-team'){
-    document.getElementById('levelDescNormal').textContent = '45 kulüp';
-    document.getElementById('levelDescHard').textContent = '90 kulüp';
+    document.getElementById('levelDescNormal').textContent = '30 kulüp';
+    document.getElementById('levelDescHard').textContent = '45 kulüp';
+    document.getElementById('levelDescUsta').textContent = '90 kulüp';
   } else {
-    document.getElementById('levelDescNormal').textContent = '45 kulüp · 45 ülke';
-    document.getElementById('levelDescHard').textContent = '90 kulüp · 90 ülke';
+    document.getElementById('levelDescNormal').textContent = '30 kulüp · 30 ülke';
+    document.getElementById('levelDescHard').textContent = '45 kulüp · 45 ülke';
+    document.getElementById('levelDescUsta').textContent = '90 kulüp · 90 ülke';
   }
   showScreen('levelSelect');
 }
@@ -975,10 +997,11 @@ function startGame(mode, level){
   usedCountries = new Set();
   document.getElementById('gameLabel').textContent = mode === 'team-team' ? 'KULÜP vs KULÜP' : 'ÜLKE vs KULÜP';
 
+  const levelLabels = {normal:'NORMAL', hard:'ZOR', usta:'USTA'};
   const levelTag = document.getElementById('levelTag');
-  levelTag.textContent = level === 'hard' ? 'ZOR' : 'NORMAL';
-  levelTag.classList.remove('tag-hard','tag-normal');
-  levelTag.classList.add(level === 'hard' ? 'tag-hard' : 'tag-normal');
+  levelTag.textContent = levelLabels[level] || 'NORMAL';
+  levelTag.classList.remove('tag-hard','tag-normal','tag-usta');
+  levelTag.classList.add('tag-' + level);
 
   showScreen('game');
   nextRound();
