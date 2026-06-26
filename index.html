@@ -2,7 +2,7 @@
   HARMANBALL
   © 2026 Selim Onay. Tüm hakları saklıdır.
   Bu kodun izinsiz kopyalanması, çoğaltılması veya başka bir isimle yayınlanması yasaktır.
-  https://www.harmanball.com
+  https://selimonay.github.io/harmanball/
 -->
 <!DOCTYPE html>
 <html lang="tr">
@@ -201,7 +201,7 @@
     </div>
   </section>
 
-  <footer style="text-align:center;margin-top:18px;padding:10px 0;font-size:12px;letter-spacing:1px;color:rgba(244,241,232,.4);">© 2026 Harmanball.com</footer>
+  <footer style="text-align:center;margin-top:18px;padding:10px 0;font-size:12px;letter-spacing:1px;color:rgba(244,241,232,.4);">© 2026 Harmanball.com<span id="visitCounterWrap">&nbsp;·&nbsp; <span id="visitCounter">···</span> ziyaret</span></footer>
 
 </div>
 
@@ -231,6 +231,16 @@ function fallbackCopy(text,cb){
   document.body.removeChild(ta);
   if(cb)cb();
 }
+fetch('https://countapi.mileshilliard.com/api/v1/hit/harmanball_com_total_visits_2026')
+  .then(r=>r.json())
+  .then(data=>{
+    const el=document.getElementById('visitCounter');
+    if(el && data && data.value) el.textContent=Number(data.value).toLocaleString('tr-TR');
+  })
+  .catch(()=>{
+    const wrap=document.getElementById('visitCounterWrap');
+    if(wrap) wrap.style.display='none';
+  });
 </script>
 
 </body>
