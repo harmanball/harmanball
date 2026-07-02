@@ -93,7 +93,7 @@
     <div class="mode-card">
       <div class="mode-eyebrow">Mod 4</div>
       <h2>⚖️ DİLEMMA</h2>
-      <p>Zor bir seçimle karşı karşıyasın.<br>Kabul mi edersin, reddeder misin?</p>
+      <p>Zor bir seçimle karşı karşıyasın.<br>Kabul mü edersin, yoksa reddeder misin?</p>
       <button class="btn-start" onclick="startDilemma()">Başla</button>
     </div>
 
@@ -478,7 +478,7 @@ function shuffleArray(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const 
 function startDilemma(){dilemmaPool=shuffleArray(DILEMMAS);dilemmaIndex=0;dilemmaVotes={yes:0,no:0};showScreen('dilemma');showDilemma();}
 function showDilemma(){
   const q=dilemmaPool[dilemmaIndex%dilemmaPool.length];
-  document.getElementById('dilemmaNum').textContent=(dilemmaIndex+1)+' / '+DILEMMAS.length;
+  document.getElementById('dilemmaNum').textContent=(dilemmaIndex+1);
   document.getElementById('dilemmaQuestion').textContent=q;
   document.getElementById('dilemmaVoteRow').style.display='grid';
   document.querySelectorAll('.dilemma-vote-btn').forEach(b=>b.disabled=false);
