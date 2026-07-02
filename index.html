@@ -349,6 +349,18 @@
   </div>
 </div>
 
+<!-- iOS PWA Banner -->
+<div id="iosBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:rgba(6,32,15,0.97);border-top:1px solid rgba(232,179,57,0.3);padding:14px 16px;backdrop-filter:blur(8px);">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+    <span style="font-size:13px;font-weight:700;color:var(--gold);letter-spacing:.5px;">📲 Ana Ekrana Ekle</span>
+    <button onclick="closeIosBanner()" style="background:transparent;border:1px solid rgba(244,241,232,0.3);border-radius:6px;padding:4px 10px;color:rgba(244,241,232,0.6);font-size:14px;cursor:pointer;line-height:1;">×</button>
+  </div>
+  <div style="font-size:12px;color:rgba(244,241,232,0.7);line-height:1.7;">
+    Safari'de <strong style="color:rgba(244,241,232,0.9);">Paylaş</strong> butonuna <span style="font-size:15px;">⬆️</span> bas,<br>
+    ardından <strong style="color:rgba(244,241,232,0.9);">"Ana Ekrana Ekle"</strong> <span style="font-size:13px;">➕</span> seç.
+  </div>
+</div>
+
 <script>const DILEMMAS = [
   // ⚽ FUTBOL TEMELİ (35 adet)
   "Favori takımın her sezon şampiyon olacak ama sen hiçbir maçı canlı izleyemeyeceksin — ne televizyonda ne de stadyumda. Kabul eder misin?",
@@ -507,17 +519,35 @@ function closePwaBanner(){
   localStorage.setItem('pwaBannerDismissed','1');
 }
 
+function closeIosBanner(){
+  document.getElementById('iosBanner').style.display='none';
+  localStorage.setItem('iosBannerDismissed','1');
+}
+
 function triggerPwaInstall(){
   if(pwaInstallPrompt){
     pwaInstallPrompt.prompt();
     pwaInstallPrompt.userChoice.then(r=>{
       if(r.outcome==='accepted'){
         document.getElementById('pwaBanner').style.display='none';
-        document.getElementById('pwaInstallBtn').style.display='none';
+        document.getElementById('pwaInstallWrap').style.display='none';
       }
       pwaInstallPrompt=null;
     });
+  } else {
+    // iOS: install prompt yok, sadece banner'ı göster
+    if(!localStorage.getItem('iosBannerDismissed')){
+      document.getElementById('iosBanner').style.display='flex';
+    }
   }
+}
+
+const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent);
+const isInStandaloneMode = ('standalone' in window.navigator) && window.navigator.standalone;
+
+if(isIos && !isInStandaloneMode && !localStorage.getItem('iosBannerDismissed')){
+  document.getElementById('pwaInstallWrap').style.display='block';
+  setTimeout(()=>{ document.getElementById('iosBanner').style.display='flex'; }, 2000);
 }
 
 window.addEventListener('beforeinstallprompt', e=>{
